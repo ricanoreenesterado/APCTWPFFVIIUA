@@ -1,0 +1,33 @@
+#include<Servo.h>
+Servo servo1;
+#define trigPin 12
+#define echoPin 11
+
+void setup()
+{
+servo1.attach(9);
+pinMode(trigPin, OUTPUT);
+pinMode(echoPin, INPUT);
+}
+
+void loop()
+{ 
+long duration, distance;
+digitalWrite(trigPin, LOW); 
+delayMicroseconds(2); 
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10); 
+digitalWrite(trigPin, LOW);
+servo1.write(0);
+
+duration = pulseIn(echoPin, HIGH);
+distance = (duration/2) / 29.1;
+
+if (distance < 10) // Checking the distance, you can change the value
+{ 
+servo1.write(90);// When the the distance below 100cm
+} else
+{
+servo1.write(0);;// when greater than 100cm
+} delay(1000);
+}
